@@ -1,12 +1,13 @@
 # Work at a Startup MCP Server 🚀
 
+[![PyPI version](https://img.shields.io/pypi/v/workatastartup-mcp.svg)](https://pypi.org/project/workatastartup-mcp/)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![MCP Specification](https://img.shields.io/badge/MCP-FastMCP-orange.svg)](https://modelcontextprotocol.io/)
 
 A Model Context Protocol (MCP) server for querying **Y Combinator** jobs and companies via [Work at a Startup](https://www.workatastartup.com).
 
-This MCP server equips AI assistants (Claude, Cursor, Gemini CLI, Antigravity) with direct access to search YC startups, explore active job listings, inspect tech stacks, filter by required skills, salary ranges, equity, and US visa sponsorship status.
+This MCP server equips AI assistants (Claude Desktop, Cursor, Gemini CLI, Antigravity) with direct access to search YC startups, explore active job listings, inspect tech stacks, filter by required skills, salary ranges, equity, and US visa sponsorship status.
 
 ---
 
@@ -39,19 +40,22 @@ The server provides 4 FastMCP tools:
 
 ## 💻 Quick Start & Installation
 
-### Option 1: Using `uvx` (No installation needed)
+### Option 1: Using `uvx` or `pipx` (Recommended)
 
-Directly run from GitHub:
-```bash
-uvx --from git+https://github.com/MIt9/workatastartup-mcp.git workatastartup-mcp
-```
+Run instantly without cloning or manually installing:
 
-Or from PyPI (after publishing):
 ```bash
 uvx workatastartup-mcp
 ```
 
-### Option 2: Local Installation
+### Option 2: Using `pip`
+
+```bash
+pip install workatastartup-mcp
+workatastartup-mcp
+```
+
+### Option 3: Development / Source Installation
 
 ```bash
 git clone https://github.com/MIt9/workatastartup-mcp.git
@@ -78,22 +82,8 @@ Add to your `claude_desktop_config.json`:
     "workatastartup": {
       "command": "uvx",
       "args": [
-        "--from",
-        "git+https://github.com/MIt9/workatastartup-mcp.git",
         "workatastartup-mcp"
       ]
-    }
-  }
-}
-```
-
-Or using local python installation:
-
-```json
-{
-  "mcpServers": {
-    "workatastartup": {
-      "command": "/path/to/workatastartup-mcp/.venv/bin/workatastartup-mcp"
     }
   }
 }
@@ -105,8 +95,10 @@ Or using local python installation:
 {
   "mcpServers": {
     "workatastartup": {
-      "command": "/path/to/workatastartup-mcp/.venv/bin/python",
-      "args": ["-m", "workatastartup"]
+      "command": "uvx",
+      "args": [
+        "workatastartup-mcp"
+      ]
     }
   }
 }

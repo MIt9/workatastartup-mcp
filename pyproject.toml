@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "workatastartup-mcp"
+version = "0.1.0"
+description = "Model Context Protocol (MCP) server for searching Y Combinator jobs and startups on Work at a Startup"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "Dmytro Bilukcha"}
+]
+keywords = [
+    "mcp",
+    "model-context-protocol",
+    "ycombinator",
+    "workatastartup",
+    "jobs",
+    "startups",
+    "fastmcp",
+    "ai"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+    "httpx>=0.24.0",
+    "mcp>=1.2.0,<2.0.0",
+]
+
+[project.scripts]
+workatastartup-mcp = "workatastartup.__main__:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+markers = [
+    "integration: mark test as integration test requiring live network access",
+]

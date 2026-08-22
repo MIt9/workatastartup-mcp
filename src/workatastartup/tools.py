@@ -30,8 +30,8 @@ def format_company_markdown(company: Dict[str, Any]) -> str:
     primary_vertical = (
         company.get("primary_vertical") or company.get("parent_sector") or "N/A"
     )
-    description = company.get("description", "").strip()
-    tech = company.get("tech_description", "").strip()
+    description = (company.get("description") or "").strip()
+    tech = (company.get("tech_description") or "").strip()
 
     lines = [
         f"# {name} ({batch})",
@@ -51,10 +51,10 @@ def format_company_markdown(company: Dict[str, Any]) -> str:
         for f in founders:
             fname = (
                 f.get("full_name")
-                or f"{f.get('first_name', '')} {f.get('last_name', '')}".strip()
+                or f"{(f.get('first_name') or '')} {(f.get('last_name') or '')}".strip()
                 or "Founder"
             )
-            bio = f.get("founder_bio", "").strip()
+            bio = (f.get("founder_bio") or "").strip()
             linkedin = f.get("linkedin", "")
             f_str = f"- **{fname}**"
             if bio:
@@ -119,7 +119,7 @@ def format_job_markdown(
     )
     link = job.get("show_path") or f"https://www.workatastartup.com/jobs/{j_id}"
     skills = _format_skills(job.get("skills", []))
-    description = job.get("description", "").strip()
+    description = (job.get("description") or "").strip()
 
     lines = [
         f"# {title} (ID: {j_id})",
@@ -158,9 +158,11 @@ def search_jobs(
     """Search YC startup jobs on WorkAtAStartup."""
     filters_parts = []
     if role:
-        filters_parts.append(f"role:{role}")
+        escaped_role = role.replace('"', '\\"')
+        filters_parts.append(f'role:"{escaped_role}"')
     if eng_type:
-        filters_parts.append(f"eng_type:{eng_type}")
+        escaped_eng_type = eng_type.replace('"', '\\"')
+        filters_parts.append(f'eng_type:"{escaped_eng_type}"')
     if remote:
         filters_parts.append("NOT remote:no")
     if visa:

@@ -7,6 +7,8 @@ from workatastartup.tools import (
     get_company_details,
     get_job_details,
     filter_jobs_by_skills,
+    format_company_markdown,
+    format_job_markdown,
 )
 
 
@@ -96,13 +98,65 @@ def test_search_jobs_with_filters(mock_company_data):
     )
 
     assert "TestCorp" in result
-    expected_filter = "role:eng AND eng_type:be AND NOT remote:no AND NOT us_visa_required:none"
+    expected_filter = 'role:"eng" AND eng_type:"be" AND NOT remote:no AND NOT us_visa_required:none'
     mock_client.get_company_ids_from_algolia_search.assert_called_once_with(
         query="python",
         page=1,
         hits_per_page=5,
         filters=expected_filter,
     )
+
+
+def test_format_company_markdown_none_fields():
+    company = {
+        "id": 102,
+        "name": "NullCorp",
+        "description": None,
+        "tech_description": None,
+        "founders": [
+            {
+                "full_name": None,
+                "first_name": None,
+                "last_name": None,
+                "founder_bio": None,
+                "linkedin": None,
+            }
+        ],
+        "jobs": [],
+    }
+    result = format_company_markdown(company)
+    assert "# NullCorp" in result
+    assert "Founder" in result
+
+
+def test_format_job_markdown_none_fields():
+    job = {
+        "id": 503,
+        "title": "Data Scientist",
+        "description": None,
+    }
+    result = format_job_markdown(job)
+    assert "# Data Scientist (ID: 503)" in result
+
+
+def test_search_jobs_facet_quoting_and_escaping():
+    mock_client = MagicMock()
+    mock_client.get_company_ids_from_algolia_search.return_value = []
+
+    search_jobs(
+        role='Engineering "Manager"',
+        eng_type="Data Science/Machine Learning",
+        client=mock_client,
+    )
+
+    expected_filter = 'role:"Engineering \\"Manager\\"" AND eng_type:"Data Science/Machine Learning"'
+    mock_client.get_company_ids_from_algolia_search.assert_called_once_with(
+        query="",
+        page=0,
+        hits_per_page=10,
+        filters=expected_filter,
+    )
+
 
 
 def test_search_jobs_no_results():

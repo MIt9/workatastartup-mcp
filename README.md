@@ -48,7 +48,7 @@ uvx workatastartup-mcp
 ### Option 2: Local Installation
 
 ```bash
-git clone https://github.com/your-username/workatastartup-mcp.git
+git clone https://github.com/MIt9/workatastartup-mcp.git
 cd workatastartup-mcp
 
 python3 -m venv .venv

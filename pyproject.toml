@@ -39,6 +39,11 @@ dependencies = [
     "mcp>=1.2.0,<2.0.0",
 ]
 
+[project.urls]
+Homepage = "https://github.com/MIt9/workatastartup-mcp"
+Repository = "https://github.com/MIt9/workatastartup-mcp"
+Issues = "https://github.com/MIt9/workatastartup-mcp/issues"
+
 [project.scripts]
 workatastartup-mcp = "workatastartup.__main__:main"
 

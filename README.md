@@ -39,8 +39,14 @@ The server provides 4 FastMCP tools:
 
 ## 💻 Quick Start & Installation
 
-### Option 1: Using `uvx` or `pipx` (Recommended)
+### Option 1: Using `uvx` (No installation needed)
 
+Directly run from GitHub:
+```bash
+uvx --from git+https://github.com/MIt9/workatastartup-mcp.git workatastartup-mcp
+```
+
+Or from PyPI (after publishing):
 ```bash
 uvx workatastartup-mcp
 ```
@@ -71,7 +77,11 @@ Add to your `claude_desktop_config.json`:
   "mcpServers": {
     "workatastartup": {
       "command": "uvx",
-      "args": ["workatastartup-mcp"]
+      "args": [
+        "--from",
+        "git+https://github.com/MIt9/workatastartup-mcp.git",
+        "workatastartup-mcp"
+      ]
     }
   }
 }

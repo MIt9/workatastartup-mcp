@@ -1,5 +1,12 @@
 """WorkAtAStartup API Client package."""
 
+import importlib.metadata
+
+try:
+    __version__ = importlib.metadata.version("workatastartup-mcp")
+except importlib.metadata.PackageNotFoundError:
+    __version__ = "0.1.0"
+
 from workatastartup.client import (
     WorkAtAStartupClient,
     DEFAULT_ALGOLIA_APP_ID,
@@ -19,6 +26,7 @@ from workatastartup.tools import (
 from workatastartup.server import mcp
 
 __all__ = [
+    "__version__",
     "WorkAtAStartupClient",
     "WorkAtAStartupError",
     "AlgoliaError",

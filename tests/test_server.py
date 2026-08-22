@@ -52,6 +52,45 @@ async def test_server_call_search_jobs_tool():
 
 
 @pytest.mark.anyio
+async def test_server_call_search_jobs_tool_with_new_filters():
+    mock_company = {
+        "id": 101,
+        "name": "ServerTestCorp",
+        "batch": "S24",
+        "website": "https://servertest.com",
+        "jobs": [{"id": 501, "title": "Software Engineer"}],
+    }
+
+    with patch("workatastartup.tools.WorkAtAStartupClient") as mock_client_cls:
+        mock_instance = MagicMock()
+        mock_client_cls.return_value = mock_instance
+        mock_instance.get_company_ids_from_algolia_search.return_value = [101]
+        mock_instance.fetch_companies.return_value = [mock_company]
+
+        result, meta = await mcp.call_tool(
+            "search_jobs",
+            {
+                "query": "python",
+                "job_type": "fulltime",
+                "min_experience": 2,
+                "max_team_size": 20,
+                "batch": "S24",
+            },
+        )
+        assert len(result) > 0
+        text = result[0].text
+        assert "ServerTestCorp" in text
+
+        expected_filter = 'job_type:"fulltime" AND min_experience <= 2 AND company_team_size <= 20 AND batch:"S24"'
+        mock_instance.get_company_ids_from_algolia_search.assert_called_once_with(
+            query="python",
+            page=0,
+            hits_per_page=10,
+            filters=expected_filter,
+        )
+
+
+@pytest.mark.anyio
 async def test_server_call_get_company_details_tool():
     mock_company = {
         "id": 102,

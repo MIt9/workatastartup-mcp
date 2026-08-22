@@ -19,6 +19,10 @@ The server provides 4 FastMCP tools:
    - `query` (str): Search term (e.g. `"backend"`, `"AI agent"`, `"Rust"`).
    - `role` (Optional[str]): Functional role (`"eng"`, `"design"`, `"product"`, `"ops"`, `"sales"`, `"marketing"`).
    - `eng_type` (Optional[str]): Engineering specialization (`"be"`, `"fe"`, `"fs"`, `"ml"`, `"mobile"`).
+   - `job_type` (Optional[str]): Employment type (e.g. `"fulltime"`, `"contract"`).
+   - `min_experience` (Optional[int]): Maximum required experience level in years (`min_experience <= N`).
+   - `max_team_size` (Optional[int]): Maximum company team size (`company_team_size <= N`).
+   - `batch` (Optional[str]): YC Batch (e.g. `"W24"`, `"S23"`).
    - `remote` (bool): Filter for remote positions (`True` / `False`).
    - `visa` (bool): Filter for US visa sponsorship (`True` / `False`).
    - `page` (int): Page index (default `0`).

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "workatastartup-mcp"
-version = "0.1.1"
+version = "0.1.2"
 description = "Model Context Protocol (MCP) server for searching Y Combinator jobs and startups on Work at a Startup"
 readme = "README.md"
 requires-python = ">=3.10"

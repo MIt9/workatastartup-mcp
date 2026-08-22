@@ -149,6 +149,10 @@ def search_jobs(
     query: str = "",
     role: Optional[str] = None,
     eng_type: Optional[str] = None,
+    job_type: Optional[str] = None,
+    min_experience: Optional[int] = None,
+    max_team_size: Optional[int] = None,
+    batch: Optional[str] = None,
     remote: bool = False,
     visa: bool = False,
     page: int = 0,
@@ -163,6 +167,16 @@ def search_jobs(
     if eng_type:
         escaped_eng_type = eng_type.replace('"', '\\"')
         filters_parts.append(f'eng_type:"{escaped_eng_type}"')
+    if job_type:
+        escaped_job_type = job_type.replace('"', '\\"')
+        filters_parts.append(f'job_type:"{escaped_job_type}"')
+    if min_experience is not None:
+        filters_parts.append(f"min_experience <= {min_experience}")
+    if max_team_size is not None:
+        filters_parts.append(f"company_team_size <= {max_team_size}")
+    if batch:
+        escaped_batch = batch.replace('"', '\\"')
+        filters_parts.append(f'batch:"{escaped_batch}"')
     if remote:
         filters_parts.append("NOT remote:no")
     if visa:

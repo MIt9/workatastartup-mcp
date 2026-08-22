@@ -107,6 +107,30 @@ def test_search_jobs_with_filters(mock_company_data):
     )
 
 
+def test_search_jobs_with_new_har_filters(mock_company_data):
+    mock_client = MagicMock()
+    mock_client.get_company_ids_from_algolia_search.return_value = [101]
+    mock_client.fetch_companies.return_value = mock_company_data
+
+    result = search_jobs(
+        query="python",
+        job_type="fulltime",
+        min_experience=3,
+        max_team_size=50,
+        batch="W24",
+        client=mock_client,
+    )
+
+    assert "TestCorp" in result
+    expected_filter = 'job_type:"fulltime" AND min_experience <= 3 AND company_team_size <= 50 AND batch:"W24"'
+    mock_client.get_company_ids_from_algolia_search.assert_called_once_with(
+        query="python",
+        page=0,
+        hits_per_page=10,
+        filters=expected_filter,
+    )
+
+
 def test_format_company_markdown_none_fields():
     company = {
         "id": 102,
@@ -146,10 +170,12 @@ def test_search_jobs_facet_quoting_and_escaping():
     search_jobs(
         role='Engineering "Manager"',
         eng_type="Data Science/Machine Learning",
+        job_type='Full "Time"',
+        batch='W"24"',
         client=mock_client,
     )
 
-    expected_filter = 'role:"Engineering \\"Manager\\"" AND eng_type:"Data Science/Machine Learning"'
+    expected_filter = 'role:"Engineering \\"Manager\\"" AND eng_type:"Data Science/Machine Learning" AND job_type:"Full \\"Time\\"" AND batch:"W\\"24\\""'
     mock_client.get_company_ids_from_algolia_search.assert_called_once_with(
         query="",
         page=0,

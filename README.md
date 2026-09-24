@@ -1,5 +1,8 @@
 # Work at a Startup MCP Server 🚀
 
+> **Search YC Work at a Startup jobs from Claude or Cursor** — MCP server for startup job listings.
+
+
 [![PyPI version](https://img.shields.io/pypi/v/workatastartup-mcp.svg)](https://pypi.org/project/workatastartup-mcp/)
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
